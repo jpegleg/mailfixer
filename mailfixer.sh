@@ -36,6 +36,12 @@ function mailarchive () {
       done
       ls /var/spool/postfix/
   done
+  cd /var/spool/
+  tar -czvf mail.$SESH.backup.tar.gz /var/spool/mail/*$SESH* /var/spool/postfix/*$SESH* &&
+  echo "Mail has been backed up to /var/spool/mail.$SESH.backup.tar.gz"
+  rm -f /var/spool/mail/*$SESH*
+  rm -f /var/spool/postfix/*$SESH*
+
 }
 
 case "$1" in
