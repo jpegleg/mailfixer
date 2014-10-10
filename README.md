@@ -1,7 +1,7 @@
 mailfixer.sh
 ============
 
-Clean out mail files periodically; suppress spam; save your system from mail file bloat.
+Clean out mail files periodically; suppress spam; save your Linux system from mail file bloat.
 
 Empty regular and postfix mail files:
 
