@@ -8,6 +8,7 @@
 # sudo ./mailfixer.sh archive
 
 SESH=$(date +"%m-%d-%y-%s")
+mkdir /var/mailfixer/ 2> /dev/null
 
 function mailremove () {
   for x in $(ls /var/mail); do
@@ -30,13 +31,13 @@ function mailarchive () {
   for x in $(ls /var/spool/postfix/); do
       cd /var/spool/postfix/"$x"
       for a in $(ls); do
-           cp "$a" /var/spool/postfix/"$a".$SESH.backup &&
+           cp -r "$a" /var/spool/postfix/"$a".$SESH.backup &&
            gzip /var/spool/postfix/"$a".$SESH.backup &&
            cp /dev/null "$a"
       done
       ls /var/spool/postfix/
   done
-  mkdir /var/mailfixer/ 2> /dev/null
+
   cd /var/mailfixer/
   mkdir backup-mail 2> /dev/null
   mkdir backup-postfix-mail 2> /dev/null
