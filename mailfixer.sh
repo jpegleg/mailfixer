@@ -47,7 +47,7 @@ function mailarchive () {
   echo "Mail has been backed up to /var/mailfixer/mail.$SESH.backup.tar.gz"
   echo "Postfix mail has been backed up to /var/mailfixer/postfix.$SESH.baskup.tar.gz"
   rm -f /var/spool/mail/*"$SESH" /var/spool/postfix/*"$SESH"*
-  rm -rf /var/mailfix/backup-mail/ /var/mailfix/backup-postfix-mail/ 
+  rm -rf /var/mailfixer/backup-mail/ /var/mailfixer/backup-postfix-mail/ 
 
 }
 
@@ -59,3 +59,7 @@ archive)
 mailarchive
 ;;
 *)
+echo "Usage: sudo ./mailfixer.sh option";
+echo "Options are remove or archive."
+exit 1;
+esac
