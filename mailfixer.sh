@@ -10,10 +10,10 @@
 SESH=$(date +"%m-%d-%y-%s")
 
 function mailremove () {
-  for x in $(ls /var/spool/mail); do
+  for x in $(ls /var/mail); do
       cp /dev/null /var/spool/mail/"$x"
   done
-  for x in $(ls /var/spool/postfix/); do
+  for x in $(ls /var/mail/postfix/); do
       cd /var/spool/postfix/"$x"
       for a in $(ls); do
            cp /dev/null "$a"
@@ -23,9 +23,9 @@ function mailremove () {
 
 function mailarchive () {
   for x in $(ls /var/spool/mail); do
-      cp /var/spool/mail/"$x" /var/spool/mail/"$x".$SESH.backup &&
-      gzip /var/spool/mail/"$x".$SESH.backup &&
-      cp /dev/null /var/spool/mail/"$x"
+      cp /var/mail/"$x" /var/mail/"$x".$SESH.backup &&
+      gzip /var/mail/"$x".$SESH.backup &&
+      cp /dev/null /var/mail/"$x"
   done
   for x in $(ls /var/spool/postfix/); do
       cd /var/spool/postfix/"$x"
@@ -36,11 +36,18 @@ function mailarchive () {
       done
       ls /var/spool/postfix/
   done
-  cd /var/spool/
-  tar -czvf mail.$SESH.backup.tar.gz /var/spool/mail/*$SESH* /var/spool/postfix/*$SESH* &&
-  echo "Mail has been backed up to /var/spool/mail.$SESH.backup.tar.gz"
-  rm -f /var/spool/mail/*$SESH*
-  rm -f /var/spool/postfix/*$SESH*
+  mkdir /var/mailfixer/ 2> /dev/null
+  cd /var/mailfixer/
+  mkdir backup-mail 2> /dev/null
+  mkdir backup-postfix-mail 2> /dev/null
+  mv /var/mail/*backup.gz backup-mail/
+  mv /var/spool/postfix/*backup.gz backup-postfix-mail/
+  tar -czvf mail.$SESH.backup.tar.gz backup-mail/  &&
+  tar -czvf postfix.$SESH.baskup.tar.gz backup-postfix-mail/
+  echo "Mail has been backed up to /var/mailfixer/mail.$SESH.backup.tar.gz"
+  echo "Postfix mail has been backed up to /var/mailfixer/postfix.$SESH.baskup.tar.gz"
+  rm -f /var/spool/mail/*"$SESH"
+  rm -f /var/spool/postfix/*"$SESH"*
 
 }
 
@@ -52,7 +59,3 @@ archive)
 mailarchive
 ;;
 *)
-echo "Usage: sudo ./mailfixer.sh option";
-echo "Options are remove or archive."
-exit 1;
-esac
