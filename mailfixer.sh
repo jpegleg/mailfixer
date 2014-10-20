@@ -14,7 +14,7 @@ function mailremove () {
   for x in $(ls /var/mail); do
       cp /dev/null /var/spool/mail/"$x"
   done
-  for x in $(ls /var/mail/postfix/); do
+  for x in $(ls /var/spool/postfix/); do
       cd /var/spool/postfix/"$x"
       for a in $(ls); do
            cp /dev/null "$a"
