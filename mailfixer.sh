@@ -40,7 +40,7 @@ function mailarchive () {
   mv /var/mail/*backup.gz backup-mail/
   mv /var/spool/postfix/*backup.gz backup-postfix-mail/
   tar -czvf mail.$SESH.backup.tar.gz backup-mail/  &&
-  tar -czvf postfix.$SESH.baskup.tar.gz backup-postfix-mail/
+  tar -czvf postfix.$SESH.backup.tar.gz backup-postfix-mail/
   echo "Mail has been backed up to /var/mailfixer/mail.$SESH.backup.tar.gz"
   echo "Postfix mail has been backed up to /var/mailfixer/postfix.$SESH.baskup.tar.gz"
   rm -f /var/spool/mail/*"$SESH" /var/spool/postfix/*"$SESH"*
